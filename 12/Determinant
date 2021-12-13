@@ -1,0 +1,47 @@
+import numpy as np
+k = np.array([[0,1,4,3,-1,0],[2,2,0,0,2,-1],[-1,0,3,2,0,0],[2,0,0,1,0,0],[5,2,5,-3,3,0],[0,-1,5,5,5,-1]])
+
+def determinante1 (matrix):
+  return matrix[0][0]
+
+def determinante2 (matrix):
+  D = (matrix[0][0]*matrix[1][1]) - (matrix[0][1]*matrix[1][0]) 
+  return D
+
+def determinante3 (matrix):
+  D = (matrix[0][0]*matrix[1][1]*matrix[2][2]) + (matrix[0][1]*matrix[1][2]*matrix[2][0]) + (matrix[0][2]*matrix[1][0]*matrix[2][1]) - (matrix[0][2]*matrix[1][1]*matrix[2][0]) - (matrix[0][1]*matrix[1][0]*matrix[2][2]) - (matrix[0][0]*matrix[1][2]*matrix[2][1])   
+  return D
+
+
+def determinanteX (matrix):
+  if matrix.shape[0] == matrix.shape[1]:
+    if matrix.shape[0] == 1:
+      return determinante1(matrix)
+    if matrix.shape[0] == 2:
+      return determinante2(matrix)
+    if matrix.shape[0] == 3:
+      return determinante3(matrix)
+    if matrix.shape[0] > 3:
+      m=0
+      n=0
+      g=0
+      cofat = np.zeros([matrix.shape[0]-1,matrix.shape[0]-1])
+      for x in range(matrix.shape[0]):
+        for i in range(matrix.shape[0]):
+          for j in range(matrix.shape[0]):
+            if j != 0 and x != i :
+              if m < cofat.shape[0]:
+                cofat[n][m] = matrix[i][j]
+                m+=1
+                if m == cofat.shape[0]:
+                  m=0
+                  n+=1      
+        m=0
+        n=0 
+        if x%2 == 1:
+          g-=matrix[x][0]*determinanteX(cofat)
+        else:
+          g+=matrix[x][0]*determinanteX(cofat)
+      return g
+
+X = determinanteX(k)
