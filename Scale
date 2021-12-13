@@ -1,0 +1,29 @@
+import numpy as np
+a = 100*np.random.random(100)
+b = np.random.random(100)
+
+x = (a/20)+5
+y = (b*5)+5
+
+
+
+mx=np.mean(x)
+my=np.mean(y)
+
+x1=x-mx
+y1=y-my
+
+s1=sum((x1)*(x1))
+s2=sum((y1)*(y1))
+
+r=sum((x1*y1))/(np.sqrt(s1*s2))
+print(r)
+
+import scipy.stats as ss
+r2=ss.pearsonr(x, y)
+print(r2)
+
+r3=ss.pearsonr(a, b)
+print(r3)
+
+"""A correlação é igual mesmo reescalando os vetores"""
